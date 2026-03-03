@@ -1,1 +1,49 @@
-/* You can add global styles to this file, and also import other style files */
+/* --- STYLES GLOBAUX DU STUDIO --- */
+
+:root {
+  // Couleurs métalliques du Marantz
+  --rack-metal: #1a1b1e; // Fond de façade très sombre
+  --metal-highlight: rgba(255, 255, 255, 0.05); // Éclat de brossage
+  --metal-shading: rgba(0, 0, 0, 0.2); // Ombre de brossage
+  
+  // Couleurs des LEDs (Inspiré du Marantz : Vert et Jaune/Orange)
+  --led-sig-green: #39ff14; // Vert éclatant
+  --led-on-green: #00ff00; // Vert plus vif pour le bouton Power
+  --led-clip-orange: #ffcc00; // Orange/Jaune pour les niveaux hauts
+}
+
+body {
+  background-color: #0d0d0d; // Fond sombre du studio
+  margin: 0;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* --- MIXIN POUR TEXTURE D'ALUMINIUM BROSSÉ --- */
+@mixin brushed-metal-texture {
+  background-color: var(--rack-metal);
+  background-image: 
+    /* Texture 1 : Brossage horizontal fin */
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 1px,
+      var(--metal-shading) 1px,
+      var(--metal-shading) 2px
+    ),
+    /* Texture 2 : Reflets de lumière plus larges et variables */
+    conic-gradient(
+      at 50% -50%, // Source lumineuse d'en haut
+      var(--metal-highlight) 0deg,
+      transparent 20deg,
+      var(--metal-shading) 40deg,
+      transparent 60deg,
+      var(--metal-highlight) 80deg
+    );
+  // Mélange les textures pour un effet naturel
+  background-blend-mode: soft-light;
+}

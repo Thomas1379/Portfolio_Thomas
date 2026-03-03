@@ -1,0 +1,11 @@
+<div class="cabinet-frame">
+    @for (project of projects; track project.title) {
+      <app-rack-unit 
+        [title]="project.title" 
+        [description]="project.desc"
+        [type]="project.type">
+      </app-rack-unit>
+    } @empty {
+      <p style="color: white;">Aucun projet trouvé dans le rack...</p>
+    }
+  </div>

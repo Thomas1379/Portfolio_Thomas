@@ -1,0 +1,33 @@
+<div class="rack-unit" [ngClass]="'type-' + type">
+    <div class="screw-tr"></div>
+    <div class="screw-br"></div>
+  
+    <div class="project-info">
+      <h3>{{ title }}</h3>
+      <p>{{ description }}</p>
+    </div>
+    
+    <div class="knob-container">
+      <div class="studio-knob-wrapper">
+        <div class="studio-knob">
+          <div class="pointer"></div>
+        </div>
+        <label>GAIN</label>
+      </div>
+  
+      @if (type !== 'default') {
+        <div class="studio-knob-wrapper second-knob">
+          <div class="studio-knob">
+            <div class="pointer"></div>
+          </div>
+          <label>LEVEL</label>
+        </div>
+      }
+  
+      <div class="led-vumeter">
+        <div class="led led-sig-green on"></div>
+        <div class="led led-clip-orange"></div>
+        <label>PEAK</label>
+      </div>
+    </div>
+  </div>
