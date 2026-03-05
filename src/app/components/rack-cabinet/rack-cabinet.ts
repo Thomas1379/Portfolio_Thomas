@@ -5,7 +5,7 @@ import { RackUnitComponent } from '../rack-unit/rack-unit';
 interface Project {
   title: string;
   desc: string;
-  type: 'default' | 'orange' | 'green'; // On limite les choix ici
+  type: 'metal' | 'orange' | 'green';
 }
 
 @Component({
@@ -20,7 +20,7 @@ export class RackCabinetComponent {
     { 
       title: 'SORTIR', 
       desc: 'Sorties culturelles', 
-      type: 'default' 
+      type: 'metal' 
     },
     { 
       title: 'ENI-ENCHERES', 

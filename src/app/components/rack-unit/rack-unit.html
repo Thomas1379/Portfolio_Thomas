@@ -1,33 +1,88 @@
 <div class="rack-unit" [ngClass]="'type-' + type">
-    <div class="screw-tr"></div>
-    <div class="screw-br"></div>
+  <div class="screw-tr"></div>
+  <div class="screw-br"></div>
+
+  <div class="project-info">
+    <h3>{{ title }}</h3>
+    <p>{{ description }}</p>
+  </div>
   
-    <div class="project-info">
-      <h3>{{ title }}</h3>
-      <p>{{ description }}</p>
-    </div>
+  <div class="controls-section">
     
-    <div class="knob-container">
-      <div class="studio-knob-wrapper">
-        <div class="studio-knob">
-          <div class="pointer"></div>
-        </div>
-        <label>GAIN</label>
+    @if (type === 'metal') {
+      <div class="big-vumeter">
+        <div class="vumeter-scale"></div>
+        <div class="vumeter-needle" [style.transform]="'rotate(' + (fader1Pos * 0.6 - 30) + 'deg)'"></div>
       </div>
-  
-      @if (type !== 'default') {
-        <div class="studio-knob-wrapper second-knob">
-          <div class="studio-knob">
+
+      <div class="fader-group">
+        <div class="fader-wrapper">
+          <div class="fader-track">
+            <div class="fader-cap" 
+             [style.bottom.%]="fader1Pos"
+             (mousedown)="startDragFader($event, 1)"
+             (touchstart)="startDragFader($event, 1)">
+        </div>
+          </div>
+          <label>IN 1</label>
+        </div>
+        <div class="fader-wrapper">
+          <div class="fader-track">
+            <div class="fader-cap" 
+                 [style.bottom.%]="fader2Pos"
+                 (mousedown)="startDragFader($event, 2)"
+                 (touchstart)="startDragFader($event, 2)">
+            </div>
+          </div>
+          <label>IN 2</label>
+        </div>
+      </div>
+    }
+
+@if (type === 'green') {
+      <div class="mini-vumeters">
+        <div class="mini-vu"><div class="needle" [style.transform]="'rotate(' + (rotationGain * 0.3) + 'deg)'"></div></div>
+        <div class="mini-vu"><div class="needle" [style.transform]="'rotate(' + (rotationThreshold * 0.3) + 'deg)'"></div></div>
+      </div>
+
+      <div class="knob-container">
+        <div class="studio-knob-wrapper">
+          <div class="studio-knob" 
+               (mousedown)="startDrag($event, 1)" (touchstart)="startDrag($event, 1)"
+               [style.transform]="'rotate(' + rotationGain + 'deg)'">
             <div class="pointer"></div>
           </div>
-          <label>LEVEL</label>
+          <label>GAIN</label>
         </div>
-      }
-  
-      <div class="led-vumeter">
-        <div class="led led-sig-green on"></div>
-        <div class="led led-clip-orange"></div>
-        <label>PEAK</label>
+
+        <div class="studio-knob-wrapper">
+          <div class="studio-knob" 
+               (mousedown)="startDrag($event, 2)" (touchstart)="startDrag($event, 2)"
+               [style.transform]="'rotate(' + rotationThreshold + 'deg)'">
+            <div class="pointer"></div>
+          </div>
+          <label>REVERB</label>
+        </div>
       </div>
+    }
+    
+        @if (type === 'orange') {
+          <div class="studio-knob-wrapper">
+            <div class="studio-knob" 
+                 style="width: 70px; height: 70px;"
+                 (mousedown)="startDrag($event, 2)" 
+                 (touchstart)="startDrag($event, 2)"
+                 [style.transform]="'rotate(' + rotationThreshold + 'deg)'">
+                <div class="pointer" style="height: 25px;"></div>
+            </div>
+            <label>THRESHOLD</label>
+          </div>
+        }
+
+    <div class="led-vumeter">
+      <div class="led led-sig-green on"></div>
+      <div class="led led-clip-orange"></div>
+      <label>OUTPUT</label>
     </div>
   </div>
+</div>
