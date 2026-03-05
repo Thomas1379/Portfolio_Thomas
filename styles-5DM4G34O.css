@@ -1,0 +1,1 @@
+@charset "UTF-8";:root{--rack-metal: #1a1b1e;--metal-highlight: rgba(255, 255, 255, .05);--metal-shading: rgba(0, 0, 0, .2);--led-sig-white: #a09c9c;--led-sig-green: #39ff14;--led-on-green: #00ff00;--led-clip-orange: #ffcc00}body{background-color:#0d0d0d;margin:0;padding:10px;display:flex;justify-content:center;align-items:center;min-height:100vh;box-sizing:border-box}
