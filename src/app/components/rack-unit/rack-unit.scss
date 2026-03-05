@@ -6,16 +6,14 @@
   height: 14px;
   border-radius: 50%;
   position: absolute;
-  // L'intérieur du trou : noir profond vers gris sombre sur le rebord
   background: radial-gradient(circle at center, #050505 60%, #333 100%);
-  // Profondeur interne + reflet de lumière sur l'arête de la plaque d'alu
   box-shadow: 
     inset 0 2px 4px rgba(0, 0, 0, 0.9),
     0 1px 1px rgba(255, 255, 255, 0.1);
 }
 
 .rack-unit {
-  @include brushed-metal-texture; // Utilise la texture définie dans styles.scss
+  @include brushed-metal-texture; 
   
   width: 100%;
   min-height: 140px;
@@ -50,33 +48,48 @@
     }
   }
 
+  // --- VARIANTE METAL (Look par défaut avec Faders) ---
+  &.type-metal {
+    background-color: rgba(20, 20, 25, 0.5);
+    background-blend-mode: multiply;
+  }
+
   // --- VARIANTE ORANGE (Type Compresseur Vintage) ---
   &.type-orange {
-    background-color: #b33a00; // Orange sombre et industriel
+    background-color: #b33a00; 
     background-blend-mode: overlay;
     
     h3 { 
-      color: #111; // Texte sombre sur fond clair
+      color: #111; 
       text-shadow: 0 1px 0 rgba(255,255,255,0.2); 
     }
     p { color: #222; font-weight: 500; }
 
     .studio-knob {
-      width: 70px !important; // Bouton beaucoup plus massif
+      width: 70px !important; 
       height: 70px !important;
       background: conic-gradient(from 180deg, #222, #000, #222) !important;
-      
-      .pointer { height: 25px !important; }
+      cursor: ns-resize;
+      user-select: none;
+      transition: none !important; 
+
+      .pointer {
+        transform: none !important; 
+        top: 5px;
+        left: 50%;
+        margin-left: -2px;
+        height: 25px !important; // Ajustement pour gros bouton
+      }
     }
   }
 
   // --- VARIANTE VERTE (Type Égaliseur British) ---
   &.type-green {
-    background-color: #1a2f24; // Vert anglais très profond
+    background-color: #1a2f24; 
     background-blend-mode: multiply;
 
     .knob-container {
-      flex-direction: row-reverse; // Layout inversé
+      flex-direction: row-reverse; 
       gap: 35px;
     }
 
@@ -96,7 +109,7 @@
     }
 
     h3 { 
-        color: var(--led-sig-green); 
+        color: var(--led-sig-white); 
         text-shadow: 0 0 8px rgba(57, 255, 20, 0.6);
         font-family: 'Courier New', monospace; 
         margin: 0; 
@@ -113,7 +126,13 @@
     }
   }
 
-  // --- CONTENEUR DES ÉLÉMENTS AUDIO ---
+  // --- CONTENEUR GLOBAL DES CONTRÔLES ---
+  .controls-section {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+  }
+
   .knob-container {
       display: flex;
       justify-content: center;
@@ -142,8 +161,9 @@
       height: 50px;
       border-radius: 50%;
       position: relative;
-      cursor: pointer;
-      transition: transform 0.1s ease-out;
+      cursor: ns-resize;
+      user-select: none;
+      transition: none !important; 
 
       background: 
         conic-gradient(from 180deg, #444 10%, #222 40%, #444 60%, #222 90%),
@@ -160,16 +180,94 @@
         height: 20px;
         background-color: #fff;
         border-radius: 2px;
-        top: 6px;
-        left: calc(50% - 2px);
+        top: 5px;
+        left: 50%;
+        margin-left: -2px;
         transform-origin: bottom center;
-        transform: rotate(-130deg); // Position par défaut
+        transform: none !important; 
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
       }
     }
   }
 
-  // --- SYSTÈME DE LEDS (VU-MÈTRE) ---
+  // --- SECTION FADERS ---
+  .fader-group {
+    display: flex;
+    gap: 15px;
+    padding: 0 10px;
+  }
+
+  .fader-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+
+    label {
+      color: #666;
+      font-size: 9px;
+      font-weight: 900;
+      font-family: 'Arial Black', sans-serif;
+    }
+  }
+
+  .fader-track {
+    width: 14px;
+    height: 80px;
+    background: #050505;
+    border-radius: 2px;
+    position: relative;
+    box-shadow: 
+      inset 2px 2px 4px rgba(0,0,0,0.8),
+      0 1px 1px rgba(255,255,255,0.1); 
+    border: 1px solid #222;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 5%;
+      bottom: 5%;
+      width: 1px;
+      background: rgba(255,255,255,0.05);
+    }
+  }
+
+  .fader-cap {
+    width: 24px;
+    height: 34px;
+    background: linear-gradient(to right, #ccc 0%, #eee 50%, #ccc 100%);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 3px;
+    cursor: grab;
+    box-shadow: 
+      0 4px 8px rgba(0,0,0,0.6),
+      inset 0 1px 1px white;
+    border: 1px solid #999;
+    transition: none !important;
+    user-select: none;
+    touch-action: none;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #000;
+      transform: translateY(-50%);
+    }
+
+    &:active {
+      cursor: grabbing;
+      filter: brightness(0.9);
+    }
+  }
+
+  // --- SYSTÈME DE LEDS ---
   .led-vumeter {
     display: flex;
     flex-direction: column;
@@ -177,7 +275,7 @@
     align-items: center;
 
     label {
-      color: #900; // Couleur "Danger" sombre pour le texte
+      color: #900;
       font-size: 9px;
       font-weight: 900;
       margin-top: -2px;
@@ -214,4 +312,61 @@
       }
     }
   }
+
+  // --- VU-MÈTRE ANALOGIQUE (Grand pour Metal) ---
+.big-vumeter {
+  width: 100px;
+  height: 60px;
+  background: #4d4d4d; // Couleur papier vieilli
+  border: 3px solid #1a1a1a;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+
+  .vumeter-scale {
+    position: absolute;
+    top: 5px; left: 5px; right: 5px; bottom: 5px;
+    border-top: 2px solid #333;
+    border-radius: 50% 50% 0 0;
+  }
+
+  .vumeter-needle {
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    width: 2px;
+    height: 50px;
+    background: #d00; // Aiguille rouge
+    transform-origin: bottom center;
+    transition: transform 0.1s ease-out;
+  }
+}
+
+// --- MINI VU-MÈTRES (Pour Green) ---
+.mini-vumeters {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  .mini-vu {
+    width: 45px;
+    height: 25px;
+    background: #222;
+    border: 1px solid #444;
+    position: relative;
+    overflow: hidden;
+
+    .needle {
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      width: 1px;
+      height: 25px;
+      background: #d00;
+      transform-origin: bottom center;
+    }
+  }
+}
+
 }
